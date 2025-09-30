@@ -19,31 +19,19 @@ APP_VERSION="v$(grep '"version"' $CURRDIR/lib/version.json | sed -E 's/.*"versio
 
 source "$CURRDIR/lib/uzful.sh"
 
-# === FUNCS ===
-
-function print_help() {
-    echo -e "Usage: $SCRIPT_NAME [options]
-
-Options:
-    -h, --help            Show this help message
-    -v, --version         Show version information
-    --forceupdate         Force update to the latest version
-    --update              Update to the latest version
-    --run                 Install the script
-"
-    exit 0
-}
-
-function update() {
-    echo "update"
-}
-
-function install() {
-    echo "install"
-}
+OS=$(get_os)
 
 # ==============================================================================================================
 # VERSION CONTROL, UPDATES
+
+# "safe-run", abstraction to "run" function, so it can work with our dry mode
+# Usage: same as run
+function srun() {
+    local CMD=$1
+    local ACCEPTABLE_EXIT_CODES=$2
+
+    run "$CMD >/dev/null" "$ACCEPTABLE_EXIT_CODES" "$_DRY" "$_SILENT"
+}
 
 function check_for_updates() {
     local FORCE_UPDATE="false"; if [[ -n "$1" ]]; then FORCE_UPDATE="true"; fi
@@ -124,6 +112,62 @@ function version_is_greater() {
         return 1
     fi
 }
+
+# === FUNCS ===
+
+function print_help() {
+    echo -e "Usage: $SCRIPT_NAME [options]
+
+Options:
+    -h, --help            Show this help message
+    -v, --version         Show version information
+    --forceupdate         Force update to the latest version
+    --update              Update to the latest version
+    --run                 Install the script
+"
+    exit 0
+}
+
+function install() {
+    local TIMESTAMP=$(date +%s)
+    local BACKUP_FOLDER="motd-bkp-$TIMESTAMP"
+
+    # fazer uma pasta de bkp
+    mkdir -p motd-bkp-$TIMESTAMP
+
+    # remover o motd.sh do issabel
+    if [[ -f /usr/local/sbin/motd.sh ]]; then
+        echo "Salvando backup de /usr/local/sbin/motd.sh em $BACKUP_FOLDER/"
+        cp /usr/local/bin/motd.sh "$BACKUP_FOLDER/"
+        rm -f /usr/local/bin/motd.sh
+    fi
+
+    # remover o profile login-info.sh do issabel
+    if [[ -f /etc/profile.d/login-info.sh ]]; then
+        echo "Salvando backup de /etc/profile.d/login-info.sh em $BACKUP_FOLDER/"
+        cp /etc/profile.d/login-info.sh "$BACKUP_FOLDER/"
+        rm -f /etc/profile.d/login-info.sh
+    fi
+
+    # copiar o motd.sh para /etc/profile.d/motd.sh
+    echo "Instalando motd.sh em /etc/profile.d/motd.sh"
+    cp "$CURRDIR/motd.sh" /etc/profile.d/motd.sh
+    chmod +x /etc/profile.d/motd.sh
+
+    # sanity check:
+    # - /etc/profile.d/motd.sh exists
+    # - /usr/local/sbin/motd.sh does not exist
+    # - /etc/profile.d/login-info.sh does not exist
+    if [[ -f /etc/profile.d/motd.sh ]] \
+    && [[ ! -f /usr/local/sbin/motd.sh ]] \
+    && [[ ! -f /etc/profile.d/login-info.sh ]]; then
+        echo "Instalação concluída com sucesso!"
+    else
+        echo "Sanity check falhou. Verifique os arquivos!"
+        exit 1
+    fi
+}
+
 # === RUNTIME ===
 
 function main () {
@@ -140,6 +184,12 @@ function main () {
         echo "FATAL: Only one option is allowed."
         exit 1
     fi
+
+    if [[ "$OS" != "centos" && "$OS" != "rocky" ]]; then
+        echo "FATAL: This script is only compatible with CentOS and Rocky Linux."
+        exit 1
+    fi
+
 
     while [[ "$#" -gt 0 ]]; do
         case "$1" in
