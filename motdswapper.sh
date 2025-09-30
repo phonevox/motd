@@ -16,6 +16,7 @@ fi
 if [[ -f /etc/profile.d/login-info.sh ]]; then
     echo "Salvando backup de /etc/profile.d/login-info.sh em motdswapper-bkp/"
     cp /etc/profile.d/login-info.sh motdswapper-bkp/
+    rm -f /etc/profile.d/login-info.sh
 fi
 
 echo "Instalando motd.sh em /usr/local/bin/motd.sh"
