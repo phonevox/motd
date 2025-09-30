@@ -198,7 +198,7 @@ fi
 #  OUTPUT
 # ========================
 echo -e "
-${RESET}Último login: $last_login - Bem vindo de volta!${RESET}
+${RESET}Bem vindo de volta!${RESET}
 Servidor modificado por ${MAGENTA}PHONEVOX GROUP TECHNOLOGY${RESET} - https://phonevox.com
 Para suporte, entre em contato através do e-mail ${CYAN}suporte@phonevox.com.br${RESET}
 
