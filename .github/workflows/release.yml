@@ -1,0 +1,34 @@
+name: Releases
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write  # Permite que a action faça push e crie releases
+
+jobs:
+  changelog:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3  # Use a versão mais recente do checkout
+
+      - name: Generate Changelog
+        id: changelog
+        uses: TriPSs/conventional-changelog-action@v3.7.1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          version-file: ./lib/version.json
+          version-path: version
+
+      - name: Create Release
+        uses: actions/create-release@v1
+        if: ${{ steps.changelog.outputs.skipped == 'false' }}  # Correção na condicional
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.changelog.outputs.tag }}
+          release_name: ${{ steps.changelog.outputs.tag }}
+          body: ${{ steps.changelog.outputs.clean_changelog }}
