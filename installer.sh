@@ -26,8 +26,9 @@ function print_help() {
 
 Options:
     -h, --help            Show this help message
-    -u, --update          Update to the latest version
     -v, --version         Show version information
+    --forceupdate         Force update to the latest version
+    --update              Update to the latest version
     --run                 Install the script
 "
     exit 0
@@ -145,6 +146,7 @@ function main () {
             -h|--help) print_help;;
             -v|--version) echo "$APP_VERSION"; exit 0;;
             --update) check_for_updates;;
+            --forceupdate) check_for_updates "true";;
             --run) install;;
             *) echo "Invalid argument: $1"; exit 1;;
         esac
