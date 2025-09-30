@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Author : Adrian K. (https://github.com/adriankubinyete)
+# Co-author, assistance : Rafael R. (https://github.com/rafaelRizzo) 
+
 # ========================
 # Verificação de distro
 # ========================
