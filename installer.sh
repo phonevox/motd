@@ -19,8 +19,6 @@ APP_VERSION="v$(grep '"version"' $CURRDIR/lib/version.json | sed -E 's/.*"versio
 
 source "$CURRDIR/lib/uzful.sh"
 
-OS=$(get_os)
-
 # ==============================================================================================================
 # VERSION CONTROL, UPDATES
 
@@ -185,8 +183,17 @@ function main () {
         exit 1
     fi
 
-    if [[ "$OS" != "centos" && "$OS" != "rocky" ]]; then
-        echo "FATAL: This script is only compatible with CentOS and Rocky Linux."
+    if [ -f /etc/os-release ]; then
+        . /etc/os-release
+        OS="$PRETTY_NAME"
+        ID="$ID"
+    else
+        echo "FATAL: Não foi possível identificar o sistema (sem /etc/os-release)"
+        exit 1
+    fi
+
+    if [[ "$ID" != "centos" && "$ID" != "rocky" ]]; then
+        echo "FATAL: This script is only compatible with CentOS and Rocky Linux. (Detected: $OS)"
         exit 1
     fi
 
