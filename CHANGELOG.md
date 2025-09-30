@@ -1,4 +1,15 @@
-# 0.2.0 (2025-09-30)
+# [0.3.0](https://github.com/phonevox/motd/compare/v0.2.0...v0.3.0) (2025-09-30)
+
+
+### Features
+
+* forceupdate flag, fixed flag listing on help (removed some flags) ([bf2008e](https://github.com/phonevox/motd/commit/bf2008e7b5b483efa82c0cdf28d8d7e96f1eaeff))
+* implement install procedure, implement os check ([f933d84](https://github.com/phonevox/motd/commit/f933d84b39aa91a88bb4a64f573875129e800030))
+* removed old installer ([c8d5ea4](https://github.com/phonevox/motd/commit/c8d5ea46c6a0045d3a75a81812a940375a694228))
+
+
+
+# [0.2.0](https://github.com/phonevox/motd/compare/a232b4e94c8cd2d247763c3e4b5a372045c431eb...v0.2.0) (2025-09-30)
 
 
 ### Bug Fixes
