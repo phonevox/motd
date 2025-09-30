@@ -141,9 +141,11 @@ fi
 #  System Info
 # ========================
 # Armazenamento total
-disk_total=$(df -B1 --total | grep total | awk '{print $2}')
-disk_used=$(df -B1 --total | grep total | awk '{print $3}')
-disk_percent=$((disk_used * 100 / disk_total))
+
+root_total=`df -h / | awk '/\// {print $(NF-4)}'`
+root_usedgb=`df -h / | awk '/\// {print $(NF-3)}' | sed 's/[^0-9\.,]//'`
+root_used=`df -h / | awk '/\// {print $(NF-1)}' | sed 's/[^0-9]//'`
+root_free=$(expr 100 - $root_used)
 
 # CPU %
 cpu_idle=$(top -bn1 | grep "Cpu(s)" | awk '{print $8}' | cut -d. -f1)
@@ -152,6 +154,7 @@ cpu_used=$((100 - cpu_idle))
 # RAM %
 read ram_total ram_used <<< $(free -m | awk '/Mem:/ {print $2, $3}')
 ram_percent=$((ram_used * 100 / ram_total))
+swap_usage=`free -m | awk '/Swap/ { printf("%3.1f%%", "exit !$2;$3/$2*100") }'`
 
 # Último login
 last_login=$(last -F -n 1 $USER | tail -n1 | awk '{$1=$1; print $4,$5,$6,$7,$8}')
@@ -191,7 +194,8 @@ if $HAS_ASTERISK; then
     rec_size=$(du -sh $ast_rec_directory/monitor 2>/dev/null | awk '{print $1}')
     log_size=$(du -sh $ast_log_directory 2>/dev/null | awk '{print $1}')
     dialer_log_size=$(du -sh /opt/issabel/dialer 2>/dev/null | awk '{print $1}')
-    ast_version=$(asterisk -V 2>/dev/null)
+    ast_version=`asterisk -rx "core show version"  2>/dev/null| awk '{print  $1" "$2}'`
+    ast_calls=`asterisk -rx "core show channels"  2>/dev/null | grep "active calls" | awk '{print $1}'`
 fi
 
 # ========================
@@ -205,8 +209,8 @@ Para suporte, entre em contato através do e-mail ${CYAN}suporte@phonevox.com.br
 ● ${YELLOW}system${RESET}
 Date        : $server_date | $server_tz
 CPU usage   : $(progress_bar "$cpu_used" "100" "0:GREEN,85:YELLOW,95:RED" "$BLACK") | Load(1,5,15): $load_average | $uptime_h
-RAM usage   : $(progress_bar "$ram_percent" "100" "0:GREEN,85:YELLOW,95:RED" "$BLACK")
-Disk usage  : $(progress_bar "$disk_percent" "100" "0:GREEN,80:YELLOW,90:RED" "$BLACK") | $(numfmt --to=iec $disk_used)/$(numfmt --to=iec $disk_total)
+RAM usage   : $(progress_bar "$ram_percent" "100" "0:GREEN,85:YELLOW,95:RED" "$BLACK") | swap: $swap_usage
+Disk usage  : $(progress_bar "$root_used" "100" "0:GREEN,80:YELLOW,90:RED" "$BLACK") | $root_usedgb/$root_total
 Hostname    : $host_name | ${GREEN}$open_ssh_sessions${RESET} open session(s)
 OS          : $os_name | MachineID: ${BLUE}$machine_id${RESET}
 IPs         : $ips
@@ -220,7 +224,7 @@ pfirewall   : $PFIREWALL_TEXT
 
 if $HAS_ASTERISK; then
 echo -e "● ${YELLOW}asterisk${RESET}
-Version     : $ast_version
+Version     : $ast_version | Active Calls: ${GREEN}$ast_calls${RESET}
 Recordings  : ${rec_size:-N/A}
 Logs        : ${log_size:-N/A}
 Dialer Logs : ${dialer_log_size:-N/A}
