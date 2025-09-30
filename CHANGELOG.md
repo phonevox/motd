@@ -1,3 +1,12 @@
+# [0.6.0](https://github.com/phonevox/motd/compare/v0.5.0...v0.6.0) (2025-09-30)
+
+
+### Features
+
+* swap percent, fix root storage value ([714b89f](https://github.com/phonevox/motd/commit/714b89fe0d0148ae88533a032aecee21fdef932c))
+
+
+
 # [0.5.0](https://github.com/phonevox/motd/compare/v0.4.0...v0.5.0) (2025-09-30)
 
 
@@ -31,17 +40,6 @@
 ### Bug Fixes
 
 * uncomment root check ([6db3dfe](https://github.com/phonevox/motd/commit/6db3dfe27e1b38689796ef88721fc53936b312e7))
-
-
-
-# [0.3.0](https://github.com/phonevox/motd/compare/v0.2.0...v0.3.0) (2025-09-30)
-
-
-### Features
-
-* forceupdate flag, fixed flag listing on help (removed some flags) ([bf2008e](https://github.com/phonevox/motd/commit/bf2008e7b5b483efa82c0cdf28d8d7e96f1eaeff))
-* implement install procedure, implement os check ([f933d84](https://github.com/phonevox/motd/commit/f933d84b39aa91a88bb4a64f573875129e800030))
-* removed old installer ([c8d5ea4](https://github.com/phonevox/motd/commit/c8d5ea46c6a0045d3a75a81812a940375a694228))
 
 
 
