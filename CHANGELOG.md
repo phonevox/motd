@@ -1,3 +1,12 @@
+## [0.3.2](https://github.com/phonevox/motd/compare/v0.3.1...v0.3.2) (2025-09-30)
+
+
+### Bug Fixes
+
+* os check ([065b873](https://github.com/phonevox/motd/commit/065b873119915ea78f4177c58dbf8479b74471d6))
+
+
+
 ## [0.3.1](https://github.com/phonevox/motd/compare/v0.3.0...v0.3.1) (2025-09-30)
 
 
