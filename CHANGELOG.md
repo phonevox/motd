@@ -1,3 +1,12 @@
+# [0.7.0](https://github.com/phonevox/motd/compare/v0.6.0...v0.7.0) (2025-09-30)
+
+
+### Features
+
+* auto install new motd after installer update ([f50be97](https://github.com/phonevox/motd/commit/f50be97fcf90c91140fd627b184602e2179f6cb9))
+
+
+
 # [0.6.0](https://github.com/phonevox/motd/compare/v0.5.0...v0.6.0) (2025-09-30)
 
 
@@ -31,15 +40,6 @@
 ### Bug Fixes
 
 * os check ([065b873](https://github.com/phonevox/motd/commit/065b873119915ea78f4177c58dbf8479b74471d6))
-
-
-
-## [0.3.1](https://github.com/phonevox/motd/compare/v0.3.0...v0.3.1) (2025-09-30)
-
-
-### Bug Fixes
-
-* uncomment root check ([6db3dfe](https://github.com/phonevox/motd/commit/6db3dfe27e1b38689796ef88721fc53936b312e7))
 
 
 
