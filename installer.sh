@@ -176,7 +176,7 @@ function install() {
     # - /etc/profile.d/motd.sh exists
     # - /usr/local/sbin/motd.sh does not exist
     # - /etc/profile.d/login-info.sh does not exist
-    if [[ -f /etc/profile.d/motd.sh ]] \
+    if [[ -f /etc/profile.d/pmotd.sh ]] \
     && [[ ! -f /usr/local/sbin/motd.sh ]] \
     && [[ ! -f /etc/profile.d/login-info.sh ]]; then
         echo "$(colorir "verde" "Instalação concluída com sucesso!")"
