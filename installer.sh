@@ -136,8 +136,8 @@ function install() {
     # remover o motd.sh do issabel
     if [[ -f /usr/local/sbin/motd.sh ]]; then
         echo "Salvando backup de /usr/local/sbin/motd.sh em $BACKUP_FOLDER/"
-        cp /usr/local/bin/motd.sh "$BACKUP_FOLDER/"
-        rm -f /usr/local/bin/motd.sh
+        cp /usr/local/sbin/motd.sh "$BACKUP_FOLDER/"
+        rm -f /usr/local/sbin/motd.sh
     fi
 
     # remover o profile login-info.sh do issabel
@@ -145,6 +145,13 @@ function install() {
         echo "Salvando backup de /etc/profile.d/login-info.sh em $BACKUP_FOLDER/"
         cp /etc/profile.d/login-info.sh "$BACKUP_FOLDER/"
         rm -f /etc/profile.d/login-info.sh
+    fi
+
+    if [[ -f /etc/profile.d/motd.sh ]]; then
+        echo "Parece que já tem um motd.sh instalado. Salvando e substituindo."
+        echo "Salvando backup de /etc/profile.d/motd.sh em $BACKUP_FOLDER/"
+        cp /etc/profile.d/motd.sh "$BACKUP_FOLDER/"
+        rm -f /etc/profile.d/motd.sh
     fi
 
     # copiar o motd.sh para /etc/profile.d/motd.sh
@@ -159,9 +166,9 @@ function install() {
     if [[ -f /etc/profile.d/motd.sh ]] \
     && [[ ! -f /usr/local/sbin/motd.sh ]] \
     && [[ ! -f /etc/profile.d/login-info.sh ]]; then
-        echo "Instalação concluída com sucesso!"
+        echo "$(colorir "verde" "Instalação concluída com sucesso!")"
     else
-        echo "Sanity check falhou. Verifique os arquivos!"
+        echo "$(colorir "vermelho" "Sanity check falhou. Verifique os arquivos!")"
         exit 1
     fi
 }
