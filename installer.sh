@@ -175,10 +175,10 @@ function main () {
         print_help
     fi
 
-    # if [[ "$EUID" -ne 0 ]]; then
-    #     echo "FATAL: This script must be run as root."
-    #     exit 1
-    # fi
+    if [[ "$EUID" -ne 0 ]]; then
+        echo "FATAL: This script must be run as root."
+        exit 1
+    fi
 
     if [[ "$#" -gt 1 ]]; then
         echo "FATAL: Only one option is allowed."
