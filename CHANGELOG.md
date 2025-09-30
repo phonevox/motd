@@ -1,3 +1,12 @@
+## [0.8.1](https://github.com/phonevox/pmotd/compare/v0.8.0...v0.8.1) (2025-09-30)
+
+
+### Bug Fixes
+
+* sanity check ([fff382f](https://github.com/phonevox/pmotd/commit/fff382fba92924a90d7276372672eb6eb6b4a9a9))
+
+
+
 # [0.8.0](https://github.com/phonevox/pmotd/compare/v0.7.0...v0.8.0) (2025-09-30)
 
 
@@ -31,15 +40,6 @@
 ### Features
 
 * check for previous installs ([bf2f50e](https://github.com/phonevox/pmotd/commit/bf2f50eaca33770a1f9dbfd96192b07d20891b78))
-
-
-
-# [0.4.0](https://github.com/phonevox/pmotd/compare/v0.3.2...v0.4.0) (2025-09-30)
-
-
-### Features
-
-* colors module ([c700393](https://github.com/phonevox/pmotd/commit/c700393a8e59f522b6369b73daa7ebe74a62c86a))
 
 
 
