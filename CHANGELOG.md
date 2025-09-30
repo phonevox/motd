@@ -1,3 +1,12 @@
+# [0.4.0](https://github.com/phonevox/motd/compare/v0.3.2...v0.4.0) (2025-09-30)
+
+
+### Features
+
+* colors module ([c700393](https://github.com/phonevox/motd/commit/c700393a8e59f522b6369b73daa7ebe74a62c86a))
+
+
+
 ## [0.3.2](https://github.com/phonevox/motd/compare/v0.3.1...v0.3.2) (2025-09-30)
 
 
