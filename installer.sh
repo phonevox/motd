@@ -12,7 +12,7 @@ SCRIPT_NAME="$(basename "$FULL_SCRIPT_PATH")"
 
 # Versioning 
 REPO_OWNER="phonevox"
-REPO_NAME="motd"
+REPO_NAME="pmotd"
 REPO_URL="https://github.com/$REPO_OWNER/$REPO_NAME"
 ZIP_URL="$REPO_URL/archive/refs/heads/main.zip"
 APP_VERSION="v$(grep '"version"' $CURRDIR/lib/version.json | sed -E 's/.*"version": *"([^"]+)".*/\1/')"
@@ -54,7 +54,7 @@ function check_for_updates() {
 
     # install the new motd
     install
-    
+
     exit 0
 }
 
@@ -151,6 +151,7 @@ function install() {
         rm -f /etc/profile.d/login-info.sh
     fi
 
+    # versão antiga
     if [[ -f /etc/profile.d/motd.sh ]]; then
         echo "Parece que já tem um motd.sh instalado. Salvando e substituindo."
         echo "Salvando backup de /etc/profile.d/motd.sh em $BACKUP_FOLDER/"
@@ -158,10 +159,18 @@ function install() {
         rm -f /etc/profile.d/motd.sh
     fi
 
-    # copiar o motd.sh para /etc/profile.d/motd.sh
-    echo "Instalando motd.sh em /etc/profile.d/motd.sh"
-    cp "$CURRDIR/motd.sh" /etc/profile.d/motd.sh
-    chmod +x /etc/profile.d/motd.sh
+    # versão nova
+    if [[ -f /etc/profile.d/pmotd.sh ]]; then
+        echo "Parece que já tem um pmotd.sh instalado. Salvando e substituindo."
+        echo "Salvando backup de /etc/profile.d/pmotd.sh em $BACKUP_FOLDER/"
+        cp /etc/profile.d/pmotd.sh "$BACKUP_FOLDER/"
+        rm -f /etc/profile.d/pmotd.sh
+    fi
+
+    # copiar o motd.sh para /etc/profile.d/pmotd.sh
+    echo "Instalando pmotd.sh em /etc/profile.d/pmotd.sh"
+    cp "$CURRDIR/pmotd.sh" /etc/profile.d/pmotd.sh
+    chmod +x /etc/profile.d/pmotd.sh
 
     # sanity check:
     # - /etc/profile.d/motd.sh exists
