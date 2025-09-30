@@ -1,3 +1,12 @@
+## [0.3.1](https://github.com/phonevox/motd/compare/v0.3.0...v0.3.1) (2025-09-30)
+
+
+### Bug Fixes
+
+* uncomment root check ([6db3dfe](https://github.com/phonevox/motd/commit/6db3dfe27e1b38689796ef88721fc53936b312e7))
+
+
+
 # [0.3.0](https://github.com/phonevox/motd/compare/v0.2.0...v0.3.0) (2025-09-30)
 
 
