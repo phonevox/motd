@@ -51,6 +51,10 @@ function check_for_updates() {
         exit 1
     fi
     update_all_files
+
+    # install the new motd
+    install
+    
     exit 0
 }
 
